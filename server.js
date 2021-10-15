@@ -3,6 +3,7 @@ const connectDB = require('./config/db');
 
 const path = require('path');
 const app = express();
+
 //const io = require('socket.io');
 
 // Connect to database
@@ -27,7 +28,7 @@ app.use('/auth', require('./routes/api/auth'));
 app.use('/reg', require('./routes/api/reg'));
 
 // Socket io section START
-const Message = require('./models/Message');
+/*const Message = require('./models/Message');
 const User = require('./models/User');
 
 const io = require('socket.io')(app);
@@ -44,10 +45,12 @@ io.sockets.on('connection', function(socket) {
     console.log("Disconnected");
   })
 })
-
+*/
 // Socket io section END
 
-app.get('/', (req, res) => res.send('API Running'));
+//app.get('/', (req, res) => res.send('API Running'));
+app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
+
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
@@ -60,5 +63,25 @@ if (process.env.NODE_ENV === 'production') {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+users = [];
+connections = [];
+
+io.on('connection', function(socket) {
+  console.log("Connection ON");
+  connections.push(socket);
+  
+  socket.on('disconnect', function(data) {
+    connections.splice(connections.indexOf(socket), 1);
+    console.log("Disconnected");
+  })
+})
+
+//const PORT = process.env.PORT || 5000;
+
+//app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
