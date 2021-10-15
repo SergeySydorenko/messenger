@@ -11,7 +11,9 @@ import {
 
 function App() {
   let [isLogged, setIsLogged] = useState(false);
-
+  const Logged = () =>{
+    setIsLogged = true;
+  }
   return (
     <div className="App">
       
@@ -27,7 +29,7 @@ function App() {
             </div>
             <Switch>
               <Route exect path="/login">
-                <Login/>
+                <Login logged={Logged}/>
               </Route>
               <Route exect path="/register">
                 <Register/>

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function Login(){
+function Login(Logged){
     let url = "http://localhost:5000/auth"
     const onFinish = (event) =>{
         let user = {
@@ -14,13 +14,16 @@ function Login(){
         //       'Content-Type': 'application/json;charset=utf-8'
         //     },
         //     body: JSON.stringify(user)
-        //   }).then((response) => console.log(response.json))
+        //   }).then((response) => response.json).then((result) => console.log(result))
         axios.post(url, {
             login: event.target[0].value,
             password: event.target[1].value
           })
           .then(function (response) {
             console.log(response);
+            if(response.data.token != undefined){
+                Logged();
+            }
           })
         event.preventDefault();
     }

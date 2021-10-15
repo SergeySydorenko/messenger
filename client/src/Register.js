@@ -1,7 +1,7 @@
-
+import axios from "axios";
 
 function Register(){
-    let url = "http://localhost:3000/"
+    let url = "http://localhost:5000/reg"
     const onFinish = async (event) =>{
         let user = {
             email: event.target[0].value,
@@ -17,6 +17,14 @@ function Register(){
         //     body: JSON.stringify(user)
         //   });
         // console.log(response);
+        axios.post(url, {
+            email: event.target[0].value,
+            login: event.target[1].value,
+            password: event.target[2].value
+          })
+          .then(function (response) {
+            console.log(response);
+          })
         event.preventDefault();
     }
     
