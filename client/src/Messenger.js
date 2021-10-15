@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {io} from "socket.io-client";
-
+import axios from 'axios';
 const socket = io("/");
 
 function Messenger(){
-
+  let myLogin;
   let [messageInfo, setMessageInfo] = useState();
 
   socket.on("connect", () => {console.log(socket.connected)});
@@ -15,15 +15,25 @@ function Messenger(){
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
 
-  const onSubmit = (e) =>{
+  let config = {
+    headers: {
+      "x-auth-token": String(getCookie('token'))
+    }
+  }
+  
+  axios.post("http://localhost:5000/auth/login", {}, config).then((res) => console.log(res))
+  const onSubmit = async (e) =>{
     e.preventDefault();
     // console.log(e.target[0].value);
+    // let response = await axios.post("http://localhost:5000/auth/login", {}, config)
+    // console.log(response);
     if(e.target[0].value != ''){
       socket.emit('send message', {token: getCookie('token'), message: e.target[0].value});
       console.log(e.target[0].value);
       e.target[0].value = '';
     }else {alert("Empty message!")}
     }
+
     socket.on('add message', (data) => {
       // добавить елемент с сообщением {data.message}
       console.log(data);
@@ -34,7 +44,7 @@ function Messenger(){
         });
     })
     const getMessage = () => {
-      
+      console.log(myLogin);
       if(messageInfo.author === myLogin){
         return(
         <div className="Mine">
