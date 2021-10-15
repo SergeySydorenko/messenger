@@ -32,14 +32,44 @@ body {
   margin-right: auto;
 }
 .messengerMain{
-  width: 90%;
   display: flex;
+  height: 100vh;
   flex-direction: column;
   justify-content: space-between;
   margin: auto;
-  background-color: purple;
+  background-color: #e04f4f;
   color: white;
   text-align: center;
-  border: 2px solid black;
-  border-radius: 10px;
+}
+.welcome-and-logout{
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.welcome-and-logout button{
+  background-color: white;
+  height: 70%;
+  border: none;
+}
+.formChat{
+  margin-bottom: 4vh;
+  height: 10vh;
+}
+.formChat input{
+  padding-left: 20px;
+  width: 60%;
+  height: 50%;
+}
+.formChat_button{
+  margin-left: 5px;
+  height: 50%;
+  background: #148f4d;
+  color: white;
+  /* border: 5px solid linear; */
+}
+.formChat_button:hover{
+  background-color: #23baa9;
+  transition: 0.5s;
 }

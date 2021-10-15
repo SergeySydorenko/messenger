@@ -8,20 +8,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import {io} from "socket.io-client";
-
-const socket = io("/");
 
 function App() {
-  // deleteCookie('token');
-  // function deleteCookie(name) {
-  //   setCookie(name, "", {
-  //     'max-age': -1
-  //   })
-  // }
-  socket.on("connect", () => {console.log(socket.connected)})
 
   const Logged = (token) =>{
+
     console.log("get token:", token);
     // document.cookie = `token=${token}`;
     setCookie('token', token, {secure: true, 'max-age': 3600});

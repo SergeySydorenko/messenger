@@ -1,33 +1,38 @@
 import axios from "axios";
+import {
+    BrowserRouter as Router,
+    useHistory
+  } from "react-router-dom";
+
 
 function Register(){
     let url = "http://localhost:5000/reg"
+    let history = useHistory();
+
     const onFinish = async (event) =>{
-        let user = {
-            email: event.target[0].value,
-            username: event.target[1].value,
-            password: event.target[2].value
-        }
-        console.log(user)
-        // let response = await fetch(url, {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json;charset=utf-8'
-        //     },
-        //     body: JSON.stringify(user)
-        //   });
-        // console.log(response);
+ 
         axios.post(url, {
             email: event.target[0].value,
             login: event.target[1].value,
             password: event.target[2].value
           })
           .then(function (response) {
-            console.log(response.data.errors[0]);
-            if(response.data.errors[0] != undefined){
-                alert('ok');
+            console.log(response);
+            if(response.data.errors != undefined){
+                alert(response.data.errors[0].msg);
             }else{
-                alert(response.data.errors[0]);
+                // axios.post(url, {
+                //     login: event.target[0].value,
+                //     password: event.target[1].value
+                //   })
+                //   .then(function (response) {
+                //     console.log(response);
+                //     if(response.data.token != undefined){
+                //         history.push("/");
+                //         logged(response.data.token);
+                //     }
+                //   })
+                history.push("/login");
             }
           })
         event.preventDefault();
