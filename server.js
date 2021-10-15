@@ -1,6 +1,6 @@
 ﻿const express = require('express');
 const connectDB = require('./config/db');
-
+const jwt = require('jsonwebtoken');
 const path = require('path');
 const app = express();
 
@@ -76,13 +76,30 @@ const io = require('socket.io')(server, {
 
 server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
+const Message = require('./models/Message');
+const User = require('./models/User');
+const config = require('config');
+
 users = [];
 connections = [];
 
 io.on('connection', function(socket) {
   console.log("Connection ON");
   connections.push(socket);
-  
+
+  socket.on('send message', async (data) => {
+    // token message
+    let decoded = jwt.verify(data.token, config.get('jwtSecret'));
+    let newMessage = new Message({
+      author: decoded.user.id,
+      text: data.message,
+      date: Date.now()
+    });
+    newMessage = await newMessage.save();
+    let addedMessage = await Message.findById(newMessage._id).populate('author').select('-password');
+    socket.emit('add message', {message: addedMessage});
+  })
+
   socket.on('disconnect', function(data) {
     connections.splice(connections.indexOf(socket), 1);
     console.log("Disconnected");
