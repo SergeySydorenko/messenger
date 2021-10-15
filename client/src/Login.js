@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function Login(Logged){
+function Login(logged){
     let url = "http://localhost:5000/auth"
     const onFinish = (event) =>{
         let user = {
@@ -22,7 +22,7 @@ function Login(Logged){
           .then(function (response) {
             console.log(response);
             if(response.data.token != undefined){
-                Logged();
+                logged();
             }
           })
         event.preventDefault();

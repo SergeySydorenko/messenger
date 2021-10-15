@@ -8,12 +8,23 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { io } from "socket.io-client";
 
 function App() {
   let [isLogged, setIsLogged] = useState(false);
   const Logged = () =>{
     setIsLogged = true;
   }
+  // const socket = io("http://localhost:5000/auth", {
+  //   reconnectionDelayMax: 10000,
+  //   auth: {
+  //     token: "123"
+  //   },
+  //   query: {
+  //     "my-key": "my-value"
+  //   }
+  // });
+
   return (
     <div className="App">
       
