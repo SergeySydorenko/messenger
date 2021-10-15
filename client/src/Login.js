@@ -1,21 +1,27 @@
-
+import axios from "axios";
 
 function Login(){
-    let url = "http://localhost:3000/"
-    const onFinish = async (event) =>{
+    let url = "http://localhost:5000/auth"
+    const onFinish = (event) =>{
         let user = {
-            username: event.target[0].value,
+            login: event.target[0].value,
             password: event.target[1].value,
         }
         console.log(user)
-        // let response = await fetch(url, {
+        // fetch(url, {
         //     method: 'POST',
         //     headers: {
         //       'Content-Type': 'application/json;charset=utf-8'
         //     },
         //     body: JSON.stringify(user)
-        //   });
-        // console.log(response);
+        //   }).then((response) => console.log(response.json))
+        axios.post(url, {
+            login: event.target[0].value,
+            password: event.target[1].value
+          })
+          .then(function (response) {
+            console.log(response);
+          })
         event.preventDefault();
     }
     

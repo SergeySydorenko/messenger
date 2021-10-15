@@ -1,5 +1,7 @@
 import Register from './Register';
+import { useState } from 'react';
 import Login from './Login';
+import Messenger from './Messenger';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,19 +10,21 @@ import {
 } from "react-router-dom";
 
 function App() {
-  let isLogged;
-  let messenger;
+  let [isLogged, setIsLogged] = useState(false);
+
   return (
     <div className="App">
-      <header className="App-header">
+      
         {isLogged ? 
-          messenger : 
+          <Messenger/> : 
           (<Router>
-            <div className="registerOrLogin">Please 
-            <Link to="/login" className="routerLinks"> login </Link> 
-            or
-            <Link to="/register" className="routerLinks"> register </Link> 
-            to access messenger.</div>
+            <div className="registerOrLogin">
+              Please 
+                <Link to="/login" className="routerLinks"> login </Link> 
+              or
+                <Link to="/register" className="routerLinks"> register </Link> 
+              to access messenger.
+            </div>
             <Switch>
               <Route exect path="/login">
                 <Login/>
@@ -31,7 +35,7 @@ function App() {
             </Switch>
           </Router>)
         }
-      </header>
+      
     </div>
   );
 }
