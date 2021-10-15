@@ -1,5 +1,5 @@
 import Register from './Register';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Login from './Login';
 import Messenger from './Messenger';
 import {
@@ -8,6 +8,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { io } from "socket.io-client";
+
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
   //     'max-age': -1
   //   })
   // }
+
   const Logged = (token) =>{
     console.log("get token:", token);
     // document.cookie = `token=${token}`;
@@ -57,10 +60,19 @@ function App() {
   }
 
 
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    const newSocket = io(`http://${window.location.hostname}:5000`);
+    setSocket(newSocket);
+    return () => newSocket.close();
+  }, [setSocket]);
+
+
   return (
     <div className="App">
       
-        {getCookie('token') ? 
+        {/* {getCookie('token') ? 
           <Messenger/> : 
           (<Router>
             <div className="registerOrLogin">
@@ -79,7 +91,17 @@ function App() {
               </Route> 
             </Switch>
           </Router>)
-        }
+        } */}
+
+
+      { socket ? (
+        <div className="chat-container">
+          Connected
+        </div>
+      ) : (
+        <div>Not Connected</div>
+      )}
+
     </div>
   );
 }
