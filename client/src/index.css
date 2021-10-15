@@ -7,7 +7,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.formLogin{
+  display: flex;
+  flex-direction: column;
+}
+.registerOrLogin{
+  margin-top: 50px;
+  text-align: center;
+}
+.routerLinks{
+  text-decoration: none;
+  color: purple;
+}
+.formLogin__input{
+  width: 50%;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.formLogin__button{
+  width: 8%;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
