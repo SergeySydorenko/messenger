@@ -58,4 +58,10 @@ router.post('/', [
     
 });
 
+router.post("/login", auth, async (req, res) => {
+    //let messages = await Message.find({}).populate('author', '-password -email');
+    let userLogin = await User.findById(req.user.id).select('login');
+    res.json(userLogin);
+});
+
 module.exports = router;

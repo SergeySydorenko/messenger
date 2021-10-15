@@ -64,7 +64,6 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 
 var server = require('http').createServer(app);
-// var io = require('socket.io')(server);
 const io = require('socket.io')(server, {
   cors: {
       origin: '*',
@@ -88,7 +87,6 @@ io.on('connection', function(socket) {
   connections.push(socket);
 
   socket.on('send message', async (data) => {
-    // token message
     let decoded = jwt.verify(data.token, config.get('jwtSecret'));
     let newMessage = new Message({
       author: decoded.user.id,
@@ -96,7 +94,7 @@ io.on('connection', function(socket) {
       date: Date.now()
     });
     newMessage = await newMessage.save();
-    let addedMessage = await Message.findById(newMessage._id).populate('author').select('-password');
+    let addedMessage = await Message.findById(newMessage._id).populate('author', '-password');
     socket.emit('add message', {message: addedMessage});
   })
 

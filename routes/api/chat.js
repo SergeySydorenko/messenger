@@ -5,7 +5,7 @@ const User = require('../../models/User');
 const auth = require('../../middleware/auth');
 
 router.get("/", auth, async (req, res) => {
-    let messages = await Message.find({});
+    let messages = await Message.find({}).populate('author', '-password -email');
     res.json(messages);
 });
 
