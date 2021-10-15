@@ -12,8 +12,13 @@ function Messenger(){
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
 
-  const onClick = () =>{
-    socket.emit('send message', {token: getCookie('token'), message: 'Hello'});
+  const onSubmit = (e) =>{
+    e.preventDefault();
+    // console.log(e.target[0].value);
+    if(e.target[0].value != ''){
+      socket.emit('send message', {token: getCookie('token'), message: e.target[0].value});
+      console.log(e.target[0].value)
+    }else {alert("Empty message!")}
   }
 
 
@@ -58,9 +63,12 @@ function Messenger(){
           <div className="messages">
             {messagas ? null : <span>Currently there are no messages!</span>}
           </div>
-          <form className="formChat">
+          <form 
+            className="formChat"
+            onSubmit={onSubmit}
+          >
             <input type="text" placeholder="Write here" className="messegeInput"></input>
-            <button type="button" className="formChat_button" onClick={onClick}>Send feetpics</button>
+            <button type="submit" className="formChat_button">Send feetpics</button>
           </form>
       </div>
     )
