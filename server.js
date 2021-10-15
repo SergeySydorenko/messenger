@@ -26,6 +26,27 @@ app.use('/chat', require('./routes/api/chat'));
 app.use('/auth', require('./routes/api/auth'));
 app.use('/reg', require('./routes/api/reg'));
 
+// Socket io section START
+const Message = require('./models/Message');
+const User = require('./models/User');
+
+const io = require('socket.io')(app);
+
+users = [];
+connections = [];
+
+io.sockets.on('connection', function(socket) {
+  console.log("Connection ON");
+  connection.push(socket);
+  
+  socket.on('disconnect', function(data) {
+    connections.splice(connections.indexOf(socket), 1);
+    console.log("Disconnected");
+  })
+})
+
+// Socket io section END
+
 app.get('/', (req, res) => res.send('API Running'));
 
 // Serve static assets in production
@@ -41,20 +62,3 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
-const Message = require('./models/Message');
-const User = require('./models/User');
-
-const io = require('socket.io')(app);
-
-users = [];
-connections = [];
-
-io.sockets.on('connection', function(socket) {
-  console.log("Connection ON");
-  connection.push(socket);
-
-  socket.on('disconnect', function(data) {
-    connections.splice(connections.indexOf(socket), 1);
-    console.log("Disconnected");
-  })
-})
