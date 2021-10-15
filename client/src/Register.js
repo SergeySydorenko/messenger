@@ -23,7 +23,12 @@ function Register(){
             password: event.target[2].value
           })
           .then(function (response) {
-            console.log(response);
+            console.log(response.data.errors[0]);
+            if(response.data.errors[0] != undefined){
+                alert('ok');
+            }else{
+                alert(response.data.errors[0]);
+            }
           })
         event.preventDefault();
     }

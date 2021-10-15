@@ -1,8 +1,19 @@
 import axios from "axios";
+import {
+    BrowserRouter as Router,
+    useHistory
+  } from "react-router-dom";
 
-function Login(logged){
+  
+const Login = ({logged}) => {
+    
+    let history = useHistory();
+
+
+
     let url = "http://localhost:5000/auth"
     const onFinish = (event) =>{
+        event.preventDefault();
         let user = {
             login: event.target[0].value,
             password: event.target[1].value,
@@ -22,10 +33,10 @@ function Login(logged){
           .then(function (response) {
             console.log(response);
             if(response.data.token != undefined){
-                logged();
+                history.push("/");
+                logged(response.data.token);
             }
           })
-        event.preventDefault();
     }
     
     return(

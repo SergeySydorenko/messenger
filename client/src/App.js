@@ -8,27 +8,59 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { io } from "socket.io-client";
+
 
 function App() {
-  let [isLogged, setIsLogged] = useState(false);
-  const Logged = () =>{
-    setIsLogged = true;
+  // deleteCookie('token');
+  // function deleteCookie(name) {
+  //   setCookie(name, "", {
+  //     'max-age': -1
+  //   })
+  // }
+  const Logged = (token) =>{
+    console.log("get token:", token);
+    // document.cookie = `token=${token}`;
+    setCookie('token', token, {secure: true, 'max-age': 3600});
+    console.log('cookies : ', getCookie('token'))
+    window.location.reload();
   }
-  // const socket = io("http://localhost:5000/auth", {
-  //   reconnectionDelayMax: 10000,
-  //   auth: {
-  //     token: "123"
-  //   },
-  //   query: {
-  //     "my-key": "my-value"
-  //   }
-  // });
+
+  function setCookie(name, value, options = {}) {
+
+    options = {
+      path: '/',
+      // при необходимости добавьте другие значения по умолчанию
+      ...options
+    };
+  
+    if (options.expires instanceof Date) {
+      options.expires = options.expires.toUTCString();
+    }
+  
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+  
+    for (let optionKey in options) {
+      updatedCookie += "; " + optionKey;
+      let optionValue = options[optionKey];
+      if (optionValue !== true) {
+        updatedCookie += "=" + optionValue;
+      }
+    }
+  
+    document.cookie = updatedCookie;
+  }
+  function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+
 
   return (
     <div className="App">
       
-        {isLogged ? 
+        {getCookie('token') ? 
           <Messenger/> : 
           (<Router>
             <div className="registerOrLogin">
@@ -48,7 +80,6 @@ function App() {
             </Switch>
           </Router>)
         }
-      
     </div>
   );
 }
