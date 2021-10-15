@@ -52,6 +52,10 @@ body {
   background-color: white;
   height: 70%;
   border: none;
+  border-radius: 20px;
+  color: white;
+  background-color: transparent;
+  border: 2px solid white;
 }
 .formChat{
   margin-bottom: 4vh;
@@ -65,11 +69,29 @@ body {
 .formChat_button{
   margin-left: 5px;
   height: 50%;
-  background: #148f4d;
+  font-size: 15px;
+  background: transparent;
   color: white;
-  /* border: 5px solid linear; */
+  border: 2px solid white;
+  border-radius: 10px;
 }
-.formChat_button:hover{
-  background-color: #23baa9;
+.formChat_button:hover, .welcome-and-logout button:hover{
+  background-color: white;
+  color: black;
   transition: 0.5s;
+}
+.oneMessage{
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+}
+.Mine{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.others{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }

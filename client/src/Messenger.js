@@ -1,8 +1,11 @@
+import { useState } from "react";
 import {io} from "socket.io-client";
 
 const socket = io("/");
 
 function Messenger(){
+
+  let [messageInfo, setMessageInfo] = useState();
 
   socket.on("connect", () => {console.log(socket.connected)});
   function getCookie(name) {
@@ -17,11 +20,42 @@ function Messenger(){
     // console.log(e.target[0].value);
     if(e.target[0].value != ''){
       socket.emit('send message', {token: getCookie('token'), message: e.target[0].value});
-      console.log(e.target[0].value)
+      console.log(e.target[0].value);
+      e.target[0].value = '';
     }else {alert("Empty message!")}
-  }
-
-
+    }
+    socket.on('add message', (data) => {
+      // добавить елемент с сообщением {data.message}
+      console.log(data);
+      setMessageInfo({
+        date: data.message.date,
+        author: data.message.author.login,
+        messageText: data.message.text
+        });
+    })
+    const getMessage = () => {
+      
+      if(messageInfo.author === myLogin){
+        return(
+        <div className="Mine">
+          <div className = "oneMessage">
+            <span>{messageInfo.date}</span>
+            <span>{messageInfo.author}</span>
+            <div>{messageInfo.messageText}</div>
+          </div>
+        </div>
+      )}else {
+        return(
+          <div className="others">
+            <div className = "oneMessage">
+              <span>{messageInfo.date}</span>
+              <span>{messageInfo.author}</span>
+              <div>{messageInfo.messageText}</div>
+            </div>
+          </div>
+        )
+      }
+    }
     function deleteCookie(name) {
         setCookie(name, "", {
         'max-age': -1
@@ -53,7 +87,6 @@ function Messenger(){
         document.cookie = updatedCookie;
       }
     // console.log(name);
-    let messagas = false;
     return(
       <div className="messengerMain">
           <div className="welcome-and-logout">
@@ -61,7 +94,8 @@ function Messenger(){
             <button type="button" onClick={() => deleteCookie('token')}>Log out</button>
           </div>
           <div className="messages">
-            {messagas ? null : <span>Currently there are no messages!</span>}
+            {messageInfo ? getMessage() : <span>Currently there are no messages!</span>}
+            {/* {getMessage() ?? } */}
           </div>
           <form 
             className="formChat"
