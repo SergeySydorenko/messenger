@@ -64,7 +64,15 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 
 var server = require('http').createServer(app);
-var io = require('socket.io')(server);
+// var io = require('socket.io')(server);
+const io = require('socket.io')(server, {
+  cors: {
+      origin: '*',
+      methods: ["GET", "POST"],
+  allowedHeaders: ["my-custom-header"],
+  credentials: true
+  }
+});
 
 server.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 

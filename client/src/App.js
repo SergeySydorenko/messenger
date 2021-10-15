@@ -8,9 +8,9 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import { io } from "socket.io-client";
+import {io} from "socket.io-client";
 
-
+const socket = io("/");
 
 function App() {
   // deleteCookie('token');
@@ -19,6 +19,7 @@ function App() {
   //     'max-age': -1
   //   })
   // }
+  socket.on("connect", () => {console.log(socket.connected)})
 
   const Logged = (token) =>{
     console.log("get token:", token);
@@ -58,21 +59,11 @@ function App() {
     ));
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
-
-
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    const newSocket = io(`http://${window.location.hostname}:5000`);
-    setSocket(newSocket);
-    return () => newSocket.close();
-  }, [setSocket]);
-
-
+  
   return (
     <div className="App">
       
-        {/* {getCookie('token') ? 
+        {getCookie('token') ? 
           <Messenger/> : 
           (<Router>
             <div className="registerOrLogin">
@@ -91,16 +82,8 @@ function App() {
               </Route> 
             </Switch>
           </Router>)
-        } */}
+        }
 
-
-      { socket ? (
-        <div className="chat-container">
-          Connected
-        </div>
-      ) : (
-        <div>Not Connected</div>
-      )}
 
     </div>
   );
