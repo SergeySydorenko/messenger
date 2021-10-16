@@ -6,7 +6,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 .formLogin{
   display: flex;
   flex-direction: column;
@@ -117,5 +116,6 @@ body {
   margin-left: auto;
   margin-right: auto;
   background: linear-gradient(#e66465, #9198e5);
+  /* background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7bDL58zacP9Dynkhq3on3UFbTkmQItpwMNA&usqp=CAU'); */
   border: 1px solid black;
 }

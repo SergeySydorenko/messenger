@@ -7,8 +7,6 @@ const socket = io("/");
 function Messenger(){
   let [myLogin, setMyLogin] = useState();
   let [messageInfo, setMessageInfo] = useState();
-
-  socket.on("connect", () => {console.log(socket.connected)});
   function getCookie(name) {
     let matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -37,9 +35,13 @@ function Messenger(){
     axios.post("http://localhost:5000/auth/login", {}, config).then((res) => setMyLogin(res.data.login)),
   messageInfo ? 
     null :
-    axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data))
-  ,[])
-
+    axios.get("http://localhost:5000/chat", config).then((res) => 
+      setMessageInfo(res.data
+      )),
+  [])
+  // axios.get("http://localhost:5000/chat", config).then((res) => 
+  // setMessageInfo(res.data
+  // ))
     const onSubmit = async (e) =>{
     e.preventDefault();
     // console.log(e.target[0].value);
@@ -50,23 +52,6 @@ function Messenger(){
       e.target[0].value = '';
     }else {alert("Empty message!")}
     }
-
-    socket.on('add message', (data) => {
-      
-      // messageInfo[Array.length(messageInfo)+1] = data.message;
-      // setMessageInfo(...messageInfo, data.message);
-      // setMessageInfo(data.message);
-      // if(messageInfo){
-      // let check = messageInfo;
-      // check[messageInfo.length] = data.message 
-      // console.log(check);
-      // setMessageInfo(check);
-      // // axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data));
-      // }
-      alert("add message alert");
-      // setMessageInfo(check);
-      axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data));
-    })
 
     function deleteCookie(name) {
         setCookie(name, "", {
@@ -99,14 +84,37 @@ function Messenger(){
         document.cookie = updatedCookie;
       }
 
-    console.log('object is', messageInfo);
     socket.on("connect", () => {
       console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+      socket.on('add message', (data) => {
+      
+        // messageInfo[Array.length(messageInfo)+1] = data.message;
+        // setMessageInfo(...messageInfo, data.message);
+        // setMessageInfo(data.message);
+        // if(messageInfo){
+          // let check = messageInfo;
+          // check[messageInfo.length] = data.message 
+          // setMessageInfo(check);
+          // messageInfo[messageInfo.length] = data.message;
+          // let check = data.message;
+          // // check[messageInfo.length] = data.message;
+          // // setMessageInfo(...messageInfo, check);
+          // setMessageInfo([...messageInfo, check]);
+          // console.log(messageInfo);
+          // check[messageInfo.length] = data.message;
+          // console.log(messageInfo.length());
+          // setMessageInfo(...messageInfo, check);
+          
+        // }
+        
+        // setMessageInfo(check);
+        axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data));
+      })
     });
     return(
       <div className="messengerMain">
           <div className="welcome-and-logout">
-            <h1>Welcome to the Messenger</h1>
+            <h1>Welcome to the CLUB BUDDY</h1>
             <button type="button" onClick={() => deleteCookie('token')}>Log out</button>
           </div>
           <div className="messages">
