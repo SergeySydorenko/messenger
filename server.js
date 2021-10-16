@@ -95,7 +95,7 @@ io.on('connection', function(socket) {
     });
     newMessage = await newMessage.save();
     let addedMessage = await Message.findById(newMessage._id).populate('author', '-password');
-    socket.emit('add message', {message: addedMessage});
+    socket.broadcast.emit('add message', {message: addedMessage});
   })
 
   socket.on('disconnect', function(data) {
