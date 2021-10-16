@@ -47,41 +47,27 @@ function Messenger(){
     // console.log(response);
     if(e.target[0].value != ''){
       socket.emit('send message', {token: getCookie('token'), message: e.target[0].value});
-      console.log(e.target[0].value);
       e.target[0].value = '';
     }else {alert("Empty message!")}
     }
 
     socket.on('add message', (data) => {
-      console.log(data.message);
+      
       // messageInfo[Array.length(messageInfo)+1] = data.message;
       // setMessageInfo(...messageInfo, data.message);
-      setMessageInfo();
+      // setMessageInfo(data.message);
+      // if(messageInfo){
+      // let check = messageInfo;
+      // check[messageInfo.length] = data.message 
+      // console.log(check);
+      // setMessageInfo(check);
+      // // axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data));
+      // }
+      alert("add message alert");
+      // setMessageInfo(check);
       axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data));
     })
 
-    // const getMessage = () => {
-    //   if(messageInfo.author === myLogin){
-    //     return(
-    //     <div className="Mine">
-    //       <div className = "oneMessage">
-    //         <span>{messageInfo.date}</span>
-    //         <span>{messageInfo.author}</span>
-    //         <div>{messageInfo.messageText}</div>
-    //       </div>
-    //     </div>
-    //   )}else {
-    //     return(
-    //       <div className="others">
-    //         <div className = "oneMessage">
-    //           <span>{messageInfo.date}</span>
-    //           <span>{messageInfo.author}</span>
-    //           <div>{messageInfo.messageText}</div>
-    //         </div>
-    //       </div>
-    //     )
-    //   }
-    // }
     function deleteCookie(name) {
         setCookie(name, "", {
         'max-age': -1
@@ -112,16 +98,11 @@ function Messenger(){
       
         document.cookie = updatedCookie;
       }
-    // const values = Object.values(messageInfo ? messageInfo : {});
-      
-    // values.forEach(value => {
-    //   console.log(value);
-    // });
-    let check;
-    // messageInfo ? Array.from(messageInfo) : null;
+
     console.log('object is', messageInfo);
-    // console.log('check is', Array.from(messageInfo));
-    // console.log(name);
+    socket.on("connect", () => {
+      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+    });
     return(
       <div className="messengerMain">
           <div className="welcome-and-logout">
@@ -138,7 +119,7 @@ function Messenger(){
             className="formChat"
             onSubmit={onSubmit}
           >
-            <span>{myLogin} (You)</span>
+            <div className="formChat__login">{myLogin} (You)</div>
             <input type="text" placeholder="Write here" className="messegeInput"></input>
             <button type="submit" className="formChat_button">Send feetpics</button>
           </form>

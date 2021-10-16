@@ -37,25 +37,28 @@ body {
   flex-direction: column;
   justify-content: space-between;
   margin: auto;
-  background-color: #e04f4f;
-  color: white;
+  background-color: white;
+  color: black;
   text-align: center;
 }
 .welcome-and-logout{
   height: 10vh;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
   align-items: center;
+}
+.welcome-and-logout h1{
+  margin-left: auto;
+  margin-right: auto;
 }
 .welcome-and-logout button{
   background-color: white;
   height: 70%;
   border: none;
   border-radius: 20px;
-  color: white;
+  color: black;
   background-color: transparent;
-  border: 2px solid white;
+  border: 2px solid black;
 }
 .formChat{
   margin-bottom: 4vh;
@@ -65,26 +68,30 @@ body {
   padding-left: 20px;
   width: 60%;
   height: 50%;
+  /* border-color: #9ddce0; */
+  border-color: gray;
+  border-radius: 8px;
 }
 .formChat_button{
   margin-left: 5px;
   height: 50%;
   font-size: 15px;
   background: transparent;
-  color: white;
-  border: 2px solid white;
+  color: black;
+  border: 2px solid black;
   border-radius: 10px;
 }
 .formChat_button:hover, .welcome-and-logout button:hover{
-  background-color: white;
+  background-color: #9ddce0;
   color: black;
   transition: 0.5s;
 }
 .oneMessage{
   display: flex;
   flex-direction: column;
-  background-color: gray;
+  background-color: white;
   border-radius: 5px;
+  margin-top: 1vh;
   margin-bottom: 1vh;
 }
 .Mine{
@@ -99,7 +106,16 @@ body {
   justify-content: flex-start;
   margin-left: 5vh;
 }
+.formChat__login{
+  width: 40%;
+  transform: translate(-20px, -5px);
+}
 .messages{
   overflow: auto; 
   height: 70vh;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  background: linear-gradient(#e66465, #9198e5);
+  border: 1px solid black;
 }
