@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import {io} from "socket.io-client";
+import Chat from './Chat';
 import axios from 'axios';
 const socket = io("/");
 
 function Messenger(){
-  let myLogin;
+  let [myLogin, setMyLogin] = useState();
   let [messageInfo, setMessageInfo] = useState();
 
   socket.on("connect", () => {console.log(socket.connected)});
@@ -20,9 +21,26 @@ function Messenger(){
       "x-auth-token": String(getCookie('token'))
     }
   }
-  
-  axios.post("http://localhost:5000/auth/login", {}, config).then((res) => console.log(res))
-  const onSubmit = async (e) =>{
+
+  // const showMessages = (data) =>{
+  //   data.map((item, index) => setMessageInfo(...messageInfo, {
+  //     date: item.date,
+  //     author: item.author.login,
+  //     messageText: item.text
+  //     }))
+  //   console.log(messageInfo);
+  // }
+
+  useEffect(() => 
+  myLogin ?
+    null :
+    axios.post("http://localhost:5000/auth/login", {}, config).then((res) => setMyLogin(res.data.login)),
+  messageInfo ? 
+    null :
+    axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data))
+  ,[])
+
+    const onSubmit = async (e) =>{
     e.preventDefault();
     // console.log(e.target[0].value);
     // let response = await axios.post("http://localhost:5000/auth/login", {}, config)
@@ -35,37 +53,37 @@ function Messenger(){
     }
 
     socket.on('add message', (data) => {
-      // добавить елемент с сообщением {data.message}
-      console.log(data);
-      setMessageInfo({
-        date: data.message.date,
-        author: data.message.author.login,
-        messageText: data.message.text
-        });
+      // console.log(data);
+      // setMessageInfo({
+      //   date: data.message.date,
+      //   author: data.message.author.login,
+      //   messageText: data.message.text
+      //   });
+      axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data))
     })
-    const getMessage = () => {
-      console.log(myLogin);
-      if(messageInfo.author === myLogin){
-        return(
-        <div className="Mine">
-          <div className = "oneMessage">
-            <span>{messageInfo.date}</span>
-            <span>{messageInfo.author}</span>
-            <div>{messageInfo.messageText}</div>
-          </div>
-        </div>
-      )}else {
-        return(
-          <div className="others">
-            <div className = "oneMessage">
-              <span>{messageInfo.date}</span>
-              <span>{messageInfo.author}</span>
-              <div>{messageInfo.messageText}</div>
-            </div>
-          </div>
-        )
-      }
-    }
+
+    // const getMessage = () => {
+    //   if(messageInfo.author === myLogin){
+    //     return(
+    //     <div className="Mine">
+    //       <div className = "oneMessage">
+    //         <span>{messageInfo.date}</span>
+    //         <span>{messageInfo.author}</span>
+    //         <div>{messageInfo.messageText}</div>
+    //       </div>
+    //     </div>
+    //   )}else {
+    //     return(
+    //       <div className="others">
+    //         <div className = "oneMessage">
+    //           <span>{messageInfo.date}</span>
+    //           <span>{messageInfo.author}</span>
+    //           <div>{messageInfo.messageText}</div>
+    //         </div>
+    //       </div>
+    //     )
+    //   }
+    // }
     function deleteCookie(name) {
         setCookie(name, "", {
         'max-age': -1
@@ -96,6 +114,15 @@ function Messenger(){
       
         document.cookie = updatedCookie;
       }
+    // const values = Object.values(messageInfo ? messageInfo : {});
+      
+    // values.forEach(value => {
+    //   console.log(value);
+    // });
+    let check;
+    // messageInfo ? Array.from(messageInfo) : null;
+    console.log('object is', messageInfo);
+    // console.log('check is', Array.from(messageInfo));
     // console.log(name);
     return(
       <div className="messengerMain">
@@ -104,13 +131,16 @@ function Messenger(){
             <button type="button" onClick={() => deleteCookie('token')}>Log out</button>
           </div>
           <div className="messages">
-            {messageInfo ? getMessage() : <span>Currently there are no messages!</span>}
-            {/* {getMessage() ?? } */}
+            {messageInfo ? messageInfo.map((item, index, array) => 
+              <Chat login={item.author.login} text={item.text} time={item.date} myLogin={myLogin}/>) : 
+              <span>Currently there are no messages!</span>
+            }
           </div>
           <form 
             className="formChat"
             onSubmit={onSubmit}
           >
+            <span>{myLogin} (You)</span>
             <input type="text" placeholder="Write here" className="messegeInput"></input>
             <button type="submit" className="formChat_button">Send feetpics</button>
           </form>
