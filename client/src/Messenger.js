@@ -87,27 +87,6 @@ function Messenger(){
     socket.on("connect", () => {
       console.log(socket.id); // x8WIv7-mJelg7on_ALbx
       socket.on('add message', (data) => {
-      
-        // messageInfo[Array.length(messageInfo)+1] = data.message;
-        // setMessageInfo(...messageInfo, data.message);
-        // setMessageInfo(data.message);
-        // if(messageInfo){
-          // let check = messageInfo;
-          // check[messageInfo.length] = data.message 
-          // setMessageInfo(check);
-          // messageInfo[messageInfo.length] = data.message;
-          // let check = data.message;
-          // // check[messageInfo.length] = data.message;
-          // // setMessageInfo(...messageInfo, check);
-          // setMessageInfo([...messageInfo, check]);
-          // console.log(messageInfo);
-          // check[messageInfo.length] = data.message;
-          // console.log(messageInfo.length());
-          // setMessageInfo(...messageInfo, check);
-          
-        // }
-        
-        // setMessageInfo(check);
         axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data));
       })
     });
