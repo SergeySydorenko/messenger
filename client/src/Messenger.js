@@ -53,13 +53,11 @@ function Messenger(){
     }
 
     socket.on('add message', (data) => {
-      // console.log(data);
-      // setMessageInfo({
-      //   date: data.message.date,
-      //   author: data.message.author.login,
-      //   messageText: data.message.text
-      //   });
-      axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data))
+      console.log(data.message);
+      // messageInfo[Array.length(messageInfo)+1] = data.message;
+      // setMessageInfo(...messageInfo, data.message);
+      setMessageInfo();
+      axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data));
     })
 
     // const getMessage = () => {
