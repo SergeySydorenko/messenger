@@ -1,0 +1,166 @@
+@mixin standartMargin($property){
+    margin-top: $property;
+    margin-left: auto;
+    margin-right: auto;
+}
+@mixin theme($url, $size){
+    background: url($url);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: $size;
+}
+body{
+    margin: 0;
+}
+.formLogin{
+    display: flex;
+    flex-direction: column;
+  }
+.registerOrLogin{
+    margin-top: 50px;
+    text-align: center;
+  }
+.routerLinks{
+    text-decoration: none;
+    color: purple;
+  }
+.formLogin__input{
+    width: 50%;
+    @include standartMargin(20px);
+  }
+.formLogin__button{
+    width: 8%;
+    @include standartMargin(20px);
+  }
+.messengerMain{
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: auto;
+    background-color: white;
+    color: black;
+    text-align: center;
+  }
+.welcome-and-logout{
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+.welcome-and-logout h1{
+    margin-left: auto;
+    margin-right: auto;
+  }
+.welcome-and-logout button{
+    background-color: white;
+    height: 70%;
+    border: none;
+    border-radius: 20px;
+    color: black;
+    background-color: transparent;
+    border: 2px solid black;
+  }
+.formChat{
+    height: 8vh;
+  }
+.formChat input{
+    padding-left: 20px;
+    width: 60%;
+    height: 50%;
+    /* border-color: #9ddce0; */
+    border-color: gray;
+    border-radius: 8px;
+  }
+.formChat_button{
+    margin-left: 5px;
+    height: 50%;
+    font-size: 15px;
+    background: transparent;
+    color: black;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+.formChat_button:hover, .welcome-and-logout button:hover{
+    background-color: #9ddce0;
+    color: black;
+    transition: 0.5s;
+  }
+.oneMessage{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
+.Mine{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 5vh;
+    opacity: 0.8;
+  }
+.others{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-left: 5vh;
+    opacity: 0.8;
+  }
+.formChat__login{
+    width: 40%;
+    transform: translate(-20px, -5px);
+  }
+.messages{
+    overflow: auto; 
+    height: 70vh;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    background: linear-gradient(#e66465, #9198e5);
+    // background-image: url('https://animethicc.com/wp-content/uploads/2021/05/miru-tights.gif') no-repeat; 
+    // background: url('https://64.media.tumblr.com/cdff3e6e1b4fc0fe7e04f736e8542d02/tumblr_puyx3e5lYx1vptudso1_400.gifv'), 
+    //  url('https://c.tenor.com/okJxD0a2jaYAAAAd/gachi-men.gif'),
+    //  url('https://c.tenor.com/6V1ooQVn3CQAAAAd/gachi-fist.gif'),
+    //  url('https://c.tenor.com/ddSa-psbO3sAAAAC/fate-padoru-christmas.gif'),
+    //  url('https://c.tenor.com/m5_m5bUeJp4AAAAd/oozora-subaru-duck.gif'),
+    //  url('https://animethicc.com/wp-content/uploads/2021/05/miru-tights.gif');
+    // //  background: url('https://c.tenor.com/okJxD0a2jaYAAAAd/gachi-men.gif') no-repeat center center; 
+    // background-position: right bottom, center top, right top, center bottom, left bottom, left top;
+    // background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+    // background-size: 30%; 
+    // background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7bDL58zacP9Dynkhq3on3UFbTkmQItpwMNA&usqp=CAU'); 
+    border: 1px solid black;
+}
+.gachi{
+    @include theme('https://c.tenor.com/okJxD0a2jaYAAAAd/gachi-men.gif', cover);
+
+}
+.lewd{
+    @include theme('gif/dontopen.gif', cover);
+}
+.padoru{
+    @include theme('https://c.tenor.com/ddSa-psbO3sAAAAC/fate-padoru-christmas.gif', 40%);
+}
+.ducks{
+    @include theme('https://c.tenor.com/m5_m5bUeJp4AAAAd/oozora-subaru-duck.gif', 40%);
+}
+.loginText{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.Login{
+    font-size: 18px;
+    font-weight: bold;
+    text-align: start;
+    margin-left: 2%;
+}
+.Text{
+    margin-left: 2%;
+    word-break: break-all;
+    flex-wrap: wrap;
+}
+
+

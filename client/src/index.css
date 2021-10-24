@@ -1,56 +1,79 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
-.formLogin{
+
+.formLogin {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
-.registerOrLogin{
+
+.registerOrLogin {
   margin-top: 50px;
   text-align: center;
 }
-.routerLinks{
+
+.routerLinks {
   text-decoration: none;
   color: purple;
 }
-.formLogin__input{
+
+.formLogin__input {
   width: 50%;
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
 }
-.formLogin__button{
+
+.formLogin__button {
   width: 8%;
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
 }
-.messengerMain{
+
+.messengerMain {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   height: 100vh;
-  flex-direction: column;
-  justify-content: space-between;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: auto;
   background-color: white;
   color: black;
   text-align: center;
 }
-.welcome-and-logout{
+
+.welcome-and-logout {
   height: 10vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
-.welcome-and-logout h1{
+
+.welcome-and-logout h1 {
   margin-left: auto;
   margin-right: auto;
 }
-.welcome-and-logout button{
+
+.welcome-and-logout button {
   background-color: white;
   height: 70%;
   border: none;
@@ -59,11 +82,12 @@ body {
   background-color: transparent;
   border: 2px solid black;
 }
-.formChat{
-  margin-bottom: 4vh;
-  height: 10vh;
+
+.formChat {
+  height: 8vh;
 }
-.formChat input{
+
+.formChat input {
   padding-left: 20px;
   width: 60%;
   height: 50%;
@@ -71,7 +95,8 @@ body {
   border-color: gray;
   border-radius: 8px;
 }
-.formChat_button{
+
+.formChat_button {
   margin-left: 5px;
   height: 50%;
   font-size: 15px;
@@ -80,42 +105,127 @@ body {
   border: 2px solid black;
   border-radius: 10px;
 }
-.formChat_button:hover, .welcome-and-logout button:hover{
+
+.formChat_button:hover, .welcome-and-logout button:hover {
   background-color: #9ddce0;
   color: black;
+  -webkit-transition: 0.5s;
   transition: 0.5s;
 }
-.oneMessage{
+
+.oneMessage {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: white;
   border-radius: 5px;
   margin-top: 1vh;
   margin-bottom: 1vh;
 }
-.Mine{
+
+.Mine {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   margin-right: 5vh;
+  opacity: 0.8;
 }
-.others{
+
+.others {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   margin-left: 5vh;
+  opacity: 0.8;
 }
-.formChat__login{
+
+.formChat__login {
   width: 40%;
-  transform: translate(-20px, -5px);
+  -webkit-transform: translate(-20px, -5px);
+          transform: translate(-20px, -5px);
 }
-.messages{
-  overflow: auto; 
+
+.messages {
+  overflow: auto;
   height: 70vh;
   width: 70%;
   margin-left: auto;
   margin-right: auto;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e66465), to(#9198e5));
   background: linear-gradient(#e66465, #9198e5);
-  /* background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7bDL58zacP9Dynkhq3on3UFbTkmQItpwMNA&usqp=CAU'); */
   border: 1px solid black;
 }
+
+.gachi {
+  background: url("https://c.tenor.com/okJxD0a2jaYAAAAd/gachi-men.gif");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.lewd {
+  background: url("gif/dontopen.gif");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.padoru {
+  background: url("https://c.tenor.com/ddSa-psbO3sAAAAC/fate-padoru-christmas.gif");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 40%;
+}
+
+.ducks {
+  background: url("https://c.tenor.com/m5_m5bUeJp4AAAAd/oozora-subaru-duck.gif");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 40%;
+}
+
+.loginText {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Login {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: start;
+  margin-left: 2%;
+}
+
+.Text {
+  margin-left: 2%;
+  word-break: break-all;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+/*# sourceMappingURL=index.css.map */

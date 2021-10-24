@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import {io} from "socket.io-client";
 import Chat from './Chat';
 import axios from 'axios';
+import ReactAudioPlayer from 'react-audio-player';
 const socket = io("/");
 
 function Messenger(){
   let [myLogin, setMyLogin] = useState();
   let [messageInfo, setMessageInfo] = useState();
+  let [messagesClass, setMessagesClass] = useState('messages');
+  let [bgm, setBGM] = useState('');
   function getCookie(name) {
     let matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -90,17 +93,39 @@ function Messenger(){
         axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data));
       })
     });
+    let volume = 0.05;
+    const setClass = (theme) => {
+      setMessagesClass("messages " + theme);
+      switch(theme) {
+        case 'gachi' : 
+          setBGM('https://dl2.mp3party.net/online/10071969.mp3');
+          break;
+        case 'lewd' :  
+          setBGM('https://kotatsu-cards.s3.eu-central-1.amazonaws.com/dont_open.mp3');
+          break;
+        case 'padoru' :
+          setBGM('https://kotatsu-cards.s3.eu-central-1.amazonaws.com/padoru.ogg');
+          break;
+        case 'ducks' : 
+          setBGM('https://dl2.mp3party.net/online/8467762.mp3');
+          break;
+      default :
+          setBGM('');
+      }
+    }
     return(
       <div className="messengerMain">
           <div className="welcome-and-logout">
             <h1>Welcome to the CLUB BUDDY</h1>
             <button type="button" onClick={() => deleteCookie('token')}>Log out</button>
           </div>
-          <div className="messages">
-            {messageInfo ? messageInfo.map((item, index, array) => 
-              <Chat login={item.author.login} text={item.text} time={item.date} myLogin={myLogin}/>) : 
-              <span>Currently there are no messages!</span>
-            }
+          <div>
+            <div className={messagesClass}>
+              {messageInfo ? messageInfo.map((item, index, array) => 
+                <Chat login={item.author.login} text={item.text} time={item.date} myLogin={myLogin}/>) : 
+                <span>Currently there are no messages!</span>
+              }
+            </div>
           </div>
           <form 
             className="formChat"
@@ -110,6 +135,19 @@ function Messenger(){
             <input type="text" placeholder="Write here" className="messegeInput"></input>
             <button type="submit" className="formChat_button">Send feetpics</button>
           </form>
+          <div>
+            <ReactAudioPlayer
+            src={bgm}
+            autoPlay
+            loop
+            volume= {volume}
+            />
+          <button onClick = {() => setClass('')}> SFW </button>
+          <button onClick = {() => setClass('gachi')}> Gachi </button>
+          <button onClick = {() => setClass('lewd')}> Lewd </button>
+          <button onClick = {() => setClass('padoru')}>Padoru</button>
+          <button onClick = {() => setClass('ducks')}>Ducks</button>
+          </div>
       </div>
     )
 }

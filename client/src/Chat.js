@@ -3,18 +3,22 @@ const Chat = (props) => {
       return(
       <div className="Mine">
         <div className = "oneMessage">
+          <div className = "loginText">
+            <span className = "Login">{props.login}:</span>
+            <div className = "Text">{props.text}</div>
+          </div>
           <span>{props.time}</span>
-          <span>{props.login}</span>
-          <div>{props.text}</div>
         </div>
       </div>
     )}else {
       return(
         <div className="others">
           <div className = "oneMessage">
+          <div className = "loginText">
+            <span className = "Login">{props.login}:</span>
+            <div className = "Text">{props.text}</div>
+          </div>
             <span>{props.time}</span>
-            <span>{props.login}</span>
-            <div>{props.text}</div>
           </div>
         </div>
       )
