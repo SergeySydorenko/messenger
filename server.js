@@ -86,6 +86,9 @@ io.on('connection', function(socket) {
   console.log("Connection ON");
   connections.push(socket);
 
+  
+  
+
   socket.on('send message', async (data) => {
     let decoded = jwt.verify(data.token, config.get('jwtSecret'));
     let newMessage = new Message({

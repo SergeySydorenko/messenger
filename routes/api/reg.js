@@ -5,6 +5,7 @@ const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 
 const User = require('../../models/User');
+const Chat = require('../../models/Chat');
 
 // @route    POST api/reg
 // @desc     Registr user & get token
@@ -44,7 +45,13 @@ router.post('/', [
 
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(password, salt);
-        await newUser.save();
+        newUser = await newUser.save();
+
+        let globalChat = await Chat.findOne({title: 'Global'});
+        if (globalChat) {
+            globalChat.users.push(newUser._id);
+            await globalChat.save();
+        }
         
         res.json({msg: "New user created"});
 
