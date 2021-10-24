@@ -13,6 +13,10 @@ const MessageSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: true
+    },
+    chat: {
+        type: Schema.Types.ObjectId,
+        ref: 'chat'
     }
 },
 { 

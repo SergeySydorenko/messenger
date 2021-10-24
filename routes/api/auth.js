@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 
 const User = require('../../models/User');
+const Chat = require('../../models/Chat');
 
 // @route    POST api/auth
 // @desc     Authenticate client & get token
@@ -43,13 +44,16 @@ router.post('/', [
             }
         }
 
+        let chats = await Chat.find({ users: { $all: [user._id]}});
+        //console.log(chats);
+
         jwt.sign(
             payload, 
             config.get('jwtSecret'),
             { expiresIn: 360000 },
             (err, token) => {
                 if (err) throw err;
-                res.json({ token });
+                res.json({ token, chats });
             });
     } catch(err) {
         console.error(err.message);
@@ -60,7 +64,8 @@ router.post('/', [
 
 router.post("/login", auth, async (req, res) => {
     let userLogin = await User.findById(req.user.id).select('login');
-    res.json(userLogin);
+    let chats = await Chat.find({ users: { $all: [req.user.id]}});
+    res.json({userLogin, chats});
 });
 
 module.exports = router;
