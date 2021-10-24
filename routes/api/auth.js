@@ -64,7 +64,8 @@ router.post('/', [
 
 router.post("/login", auth, async (req, res) => {
     let userLogin = await User.findById(req.user.id).select('login');
-    res.json(userLogin);
+    let chats = await Chat.find({ users: { $all: [req.user.id]}});
+    res.json({userLogin, chats});
 });
 
 module.exports = router;
