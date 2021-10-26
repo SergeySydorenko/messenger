@@ -16,7 +16,6 @@ function Messenger(){
   }
   const [myLogin, setMyLogin] = useState();
   const [messageInfo, setMessageInfo] = useState();
-  const [messagesClass, setMessagesClass] = useState('messages');
   const [chats, setChats] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [chooseName, setChooseName] = useState();
@@ -148,7 +147,7 @@ function Messenger(){
               </Modal>
               {chats ? <ChatsList chats={chats}/> : null}
             </div>
-            <div className={messagesClass}>
+            <div className='messages'>
               {messageInfo ? messageInfo.map((item, index, array) => 
                 <Chat login={item.author.login} text={item.text} time={item.date} myLogin={myLogin}/>) : 
                 <span>Currently there are no messages!</span>
