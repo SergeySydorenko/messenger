@@ -1,15 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {io} from "socket.io-client";
 import Chat from './Chat';
 import axios from 'axios';
-import ReactAudioPlayer from 'react-audio-player';
+import ChatsList from "./ChatsList";
+import {Modal, Button} from "antd";
+import 'antd/dist/antd.css';
+import Select from "./Select";
 const socket = io("/");
 
 function Messenger(){
-  let [myLogin, setMyLogin] = useState();
-  let [messageInfo, setMessageInfo] = useState();
-  let [messagesClass, setMessagesClass] = useState('messages');
-  let [bgm, setBGM] = useState('');
+  let config = {
+    headers: {
+      "x-auth-token": String(getCookie('token'))
+    }
+  }
+  const [myLogin, setMyLogin] = useState();
+  const [messageInfo, setMessageInfo] = useState();
+  const [messagesClass, setMessagesClass] = useState('messages');
+  const [chats, setChats] = useState();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [chooseName, setChooseName] = useState();
+  let chatName = useRef(null);
+  let chatMember = useRef(null);
   function getCookie(name) {
     let matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -17,44 +29,30 @@ function Messenger(){
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
 
-  let config = {
-    headers: {
-      "x-auth-token": String(getCookie('token'))
-    }
-  }
-
-  // const showMessages = (data) =>{
-  //   data.map((item, index) => setMessageInfo(...messageInfo, {
-  //     date: item.date,
-  //     author: item.author.login,
-  //     messageText: item.text
-  //     }))
-  //   console.log(messageInfo);
-  // }
-
   useEffect(() => 
-  myLogin ?
-    null :
-    axios.post("http://localhost:5000/auth/login", {}, config).then((res) => setMyLogin(res.data.login)),
-  messageInfo ? 
-    null :
-    axios.get("http://localhost:5000/chat", config).then((res) => 
-      setMessageInfo(res.data
-      )),
-  [])
-  // axios.get("http://localhost:5000/chat", config).then((res) => 
-  // setMessageInfo(res.data
-  // ))
+    myLogin ?
+      null :
+      axios.post("http://localhost:5000/auth/login", {}, config).then((res) => {
+        setChats(res.data.chats)
+        setMyLogin(res.data.userLogin.login)
+      }),
+    messageInfo ? 
+      null :
+      axios.get("http://localhost:5000/chat", config).then((res) => 
+        setMessageInfo(res.data)),
+    chooseName ? null : 
+      axios.get('http://localhost:5000/chat/findUser?login=',config).then((res)=>
+      {console.log(res.data); 
+        setChooseName(res.data);}
+      ),[])
+
     const onSubmit = async (e) =>{
-    e.preventDefault();
-    // console.log(e.target[0].value);
-    // let response = await axios.post("http://localhost:5000/auth/login", {}, config)
-    // console.log(response);
-    if(e.target[0].value != ''){
-      socket.emit('send message', {token: getCookie('token'), message: e.target[0].value});
-      e.target[0].value = '';
-    }else {alert("Empty message!")}
-    }
+      e.preventDefault();
+      if(e.target[0].value != ''){
+        socket.emit('send message', {token: getCookie('token'), message: e.target[0].value});
+        e.target[0].value = '';
+      }else {alert("Empty message!")}
+      }
 
     function deleteCookie(name) {
         setCookie(name, "", {
@@ -88,38 +86,68 @@ function Messenger(){
       }
 
     socket.on("connect", () => {
-      console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+      console.log(socket.id); 
       socket.on('add message', (data) => {
         axios.get("http://localhost:5000/chat", config).then((res) => setMessageInfo(res.data));
       })
     });
-    let volume = 0.05;
-    const setClass = (theme) => {
-      setMessagesClass("messages " + theme);
-      switch(theme) {
-        case 'gachi' : 
-          setBGM('https://dl2.mp3party.net/online/10071969.mp3');
-          break;
-        case 'lewd' :  
-          setBGM('https://kotatsu-cards.s3.eu-central-1.amazonaws.com/dont_open.mp3');
-          break;
-        case 'padoru' :
-          setBGM('https://kotatsu-cards.s3.eu-central-1.amazonaws.com/padoru.ogg');
-          break;
-        case 'ducks' : 
-          setBGM('https://dl2.mp3party.net/online/8467762.mp3');
-          break;
-      default :
-          setBGM('');
-      }
+    
+    const showModal = () => {
+      setIsModalVisible(true);
+    };
+    const select = (selected) => {
+      console.log(selected);
+      chatMember.current.value = selected;
+    }
+    const handleOk = () => {
+      if(chatName.current.value != '' && chatMember.current.value != ''){
+
+        axios.post('http://localhost:5000/chat/newChat', {
+          title: chatName.current.value,
+          login: chatMember.current.value
+        }, config).then((res) => 
+            {
+            axios.post("http://localhost:5000/auth/login", {}, config).then((res) => {
+              setChats(res.data.chats)
+              setMyLogin(res.data.userLogin.login)
+        })})
+        setIsModalVisible(false);
+      }else {alert("Empty chat name or member name!")}
+    };
+    const handleCancel = () => {
+      setIsModalVisible(false);
+    };
+    const onChange = (e) =>{
+      axios.get('http://localhost:5000/chat/findUser?login=' + e.target.value,
+        config).then((res)=>
+          {setChooseName(res.data);})
     }
     return(
       <div className="messengerMain">
           <div className="welcome-and-logout">
+            <button className="createChat__button" type='primary' onClick={showModal}>Create new chat</button>
             <h1>Welcome to the CLUB BUDDY</h1>
             <button type="button" onClick={() => deleteCookie('token')}>Log out</button>
           </div>
-          <div>
+          <div className="chats">
+            <div className="chatsList">
+              <Modal title="Create Chat" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+                <div className="createChat__form">
+                  <input 
+                  ref={chatName} 
+                  placeholder="Chat name" 
+                  >
+                  </input>
+                  <input 
+                    ref={chatMember} 
+                    placeholder="Invite" 
+                    onChange={onChange}
+                  ></input>
+                  <Select name={chooseName} select={select}/>
+                </div>
+              </Modal>
+              {chats ? <ChatsList chats={chats}/> : null}
+            </div>
             <div className={messagesClass}>
               {messageInfo ? messageInfo.map((item, index, array) => 
                 <Chat login={item.author.login} text={item.text} time={item.date} myLogin={myLogin}/>) : 
@@ -128,26 +156,13 @@ function Messenger(){
             </div>
           </div>
           <form 
-            className="formChat"
-            onSubmit={onSubmit}
-          >
-            <div className="formChat__login">{myLogin} (You)</div>
-            <input type="text" placeholder="Write here" className="messegeInput"></input>
-            <button type="submit" className="formChat_button">Send feetpics</button>
-          </form>
-          <div>
-            <ReactAudioPlayer
-            src={bgm}
-            autoPlay
-            loop
-            volume= {volume}
-            />
-          <button onClick = {() => setClass('')}> SFW </button>
-          <button onClick = {() => setClass('gachi')}> Gachi </button>
-          <button onClick = {() => setClass('lewd')}> Lewd </button>
-          <button onClick = {() => setClass('padoru')}>Padoru</button>
-          <button onClick = {() => setClass('ducks')}>Ducks</button>
-          </div>
+              className="formChat"
+              onSubmit={onSubmit}
+            >
+              <div className="formChat__login">{myLogin} (You)</div>
+              <input type="text" placeholder="Write here" className="messegeInput"></input>
+              <button type="submit" className="formChat_button">Send feetpics</button>
+          </form>  
       </div>
     )
 }

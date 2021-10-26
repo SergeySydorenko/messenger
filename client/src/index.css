@@ -1,3 +1,7 @@
+::-webkit-scrollbar {
+  width: 0;
+}
+
 body {
   margin: 0;
 }
@@ -79,17 +83,20 @@ body {
   border: none;
   border-radius: 20px;
   color: black;
+  margin-right: 2vh;
   background-color: transparent;
   border: 2px solid black;
 }
 
 .formChat {
   height: 8vh;
+  margin-left: 20vh;
+  width: 70%;
 }
 
 .formChat input {
   padding-left: 20px;
-  width: 60%;
+  width: 70%;
   height: 50%;
   /* border-color: #9ddce0; */
   border-color: gray;
@@ -99,7 +106,7 @@ body {
 .formChat_button {
   margin-left: 5px;
   height: 50%;
-  font-size: 15px;
+  font-size: 100%;
   background: transparent;
   color: black;
   border: 2px solid black;
@@ -159,47 +166,19 @@ body {
 
 .formChat__login {
   width: 40%;
-  -webkit-transform: translate(-20px, -5px);
-          transform: translate(-20px, -5px);
+  -webkit-transform: translate(-14%, -5px);
+          transform: translate(-14%, -5px);
+  font-weight: bold;
 }
 
 .messages {
   overflow: auto;
   height: 70vh;
-  width: 70%;
-  margin-left: auto;
-  margin-right: auto;
-  background: -webkit-gradient(linear, left top, left bottom, from(#e66465), to(#9198e5));
-  background: linear-gradient(#e66465, #9198e5);
+  width: 100%;
+  margin-right: 1vh;
+  margin-left: 1vh;
+  background: #cdcbd4;
   border: 1px solid black;
-}
-
-.gachi {
-  background: url("https://c.tenor.com/okJxD0a2jaYAAAAd/gachi-men.gif");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.lewd {
-  background: url("gif/dontopen.gif");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.padoru {
-  background: url("https://c.tenor.com/ddSa-psbO3sAAAAC/fate-padoru-christmas.gif");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 40%;
-}
-
-.ducks {
-  background: url("https://c.tenor.com/m5_m5bUeJp4AAAAd/oozora-subaru-duck.gif");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: 40%;
 }
 
 .loginText {
@@ -227,5 +206,93 @@ body {
   word-break: break-all;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+}
+
+.chats {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.chatsList button {
+  margin-bottom: 20px;
+}
+
+.chatsList {
+  margin-left: 5vh;
+  height: 70vh;
+  overflow-y: scroll;
+}
+
+.oneChat {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: white;
+  border: 1px solid black;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.oneChat:hover {
+  background-color: #cdcbd4;
+  border: 1px solid black;
+  color: black;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.createChat__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.select {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-top: 1vh;
+  height: 12.5vh;
+  overflow: hidden;
+}
+
+.select_item {
+  border: 1px solid gray;
+  width: 40%;
+  height: 4vh;
+  margin-top: 1px;
+  margin-right: 1px;
+}
+
+.select_item:hover {
+  background-color: #e1dfed;
+  border: 1px solid black;
+  -webkit-transition: 0.3;
+  transition: 0.3;
+}
+
+.createChat__button {
+  margin-left: 4vh;
 }
 /*# sourceMappingURL=index.css.map */
