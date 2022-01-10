@@ -19,6 +19,7 @@ function Messenger(){
   const [chats, setChats] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [chooseName, setChooseName] = useState();
+  const [chooseChat, setChooseChat] = useState(['','']);
   let chatName = useRef(null);
   let chatMember = useRef(null);
   function getCookie(name) {
@@ -123,15 +124,18 @@ function Messenger(){
     }
     return(
       <div className="messengerMain">
-          <div className="welcome-and-logout">
-            <button className="createChat__button" type='primary' onClick={showModal}>Create new chat</button>
-            <h1>Welcome to the CLUB BUDDY</h1>
-            <button type="button" onClick={() => deleteCookie('token')}>Log out</button>
+          <button className="createChat__button" type='primary' onClick={showModal}>Create new chat</button>
+          <div className="MainName">
+            <h2>{chooseChat[0]}</h2>
+            <span className="usersNumber">{chooseChat[1]}</span>
           </div>
-          <div className="chats">
-            <div className="chatsList">
-              <Modal title="Create Chat" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                <div className="createChat__form">
+          <button className="logout__button" type="button" onClick={() => deleteCookie('token')}>
+            <span>Log out</span>
+          </button>
+          
+          <div className="chatsList">
+            <Modal title="Create Chat" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+              <div className="createChat__form">
                   <input 
                   ref={chatName} 
                   placeholder="Chat name" 
@@ -143,25 +147,31 @@ function Messenger(){
                     onChange={onChange}
                   ></input>
                   <Select name={chooseName} select={select}/>
-                </div>
-              </Modal>
-              {chats ? <ChatsList chats={chats}/> : null}
-            </div>
-            <div className='messages'>
+              </div>
+            </Modal>
+            {chats ? 
+              <ChatsList chats={chats} 
+                selectChat={
+                  (chooseChatName,chooseUsersNumber)=>setChooseChat([chooseChatName, 'Users: ' + chooseUsersNumber])
+                }
+              /> 
+                :
+              null}
+          </div>
+          <div className='messages'>
               {messageInfo ? messageInfo.map((item, index, array) => 
                 <Chat login={item.author.login} text={item.text} time={item.date} myLogin={myLogin}/>) : 
-                <span>Currently there are no messages!</span>
+                <div className="noChat">There are no messages!</div>
               }
-            </div>
           </div>
           <form 
-              className="formChat"
-              onSubmit={onSubmit}
-            >
-              <div className="formChat__login">{myLogin} (You)</div>
-              <input type="text" placeholder="Write here" className="messegeInput"></input>
-              <button type="submit" className="formChat_button">Send feetpics</button>
-          </form>  
+            className="formChat"
+            onSubmit={onSubmit}
+          >
+            
+            <input type="text" placeholder="Write here" className="messegeInput"></input>
+            <button type="submit" className="formChat_button">Send</button>
+        </form>  
       </div>
     )
 }

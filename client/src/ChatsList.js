@@ -1,13 +1,14 @@
 const ChatsList = (props) =>{
     const onClick = (item) =>{
-        console.log('clicked: ', item.title)
+        console.log('clicked: ', item.title);
+        props.selectChat(item.title, item.users.length);
     }
     return(
         <div>
             {props.chats.map((item)=>
                 <div className="oneChat" onClick={() => onClick(item)}>
-                    <span>{item.title}</span>
-                    <span>Users : {item.users.length}</span>
+                    <span className="chatName">{item.title}</span>
+                    {/* <span className="usersNumber">Users : {item.users.length}</span> */}
                 </div>)}
         </div>
     )

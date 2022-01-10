@@ -10,13 +10,21 @@
 body{
     margin: 0;
 }
+#root .App{
+  height: 100vh;
+}
+.App{
+  border: 1px solid #b3b2ae;
+  border-radius: 4px;
+}
 .formLogin{
     display: flex;
     flex-direction: column;
   }
 .registerOrLogin{
-    margin-top: 50px;
+    margin-top: 10%;
     text-align: center;
+    font-size: large;
   }
 .routerLinks{
     text-decoration: none;
@@ -24,69 +32,92 @@ body{
   }
 .formLogin__input{
     width: 50%;
+    padding: 5px;
     @include standartMargin(20px);
+    border: 1px solid black;
+    border-radius: 4px;
   }
 .formLogin__button{
     width: 8%;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: #F7AD1D;
     @include standartMargin(20px);
   }
+.formLogin__button:hover{
+  background-color: #CD901A;
+  transition: 0.4s;
+}
+.formLogin__input:focus{
+  background-color: #EBEBE7;
+}
 .messengerMain{
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: auto;
-    background-color: white;
-    color: black;
-    text-align: center;
+    display: grid;
+    grid-template-areas:
+      "D D E E   E E E E   E E F F"
+      "A A B B   B B B B   B B B B"
+      "A A B B   B B B B   B B B B"
+      "A A C C   C C C C   C C C C";
   }
-.welcome-and-logout{
-    height: 10vh;
+.MainName{
+    grid-area: E;
+    width: 100%;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 5vh;
+}
+.noChat{
+  margin-top: 35vh;
+  font-size: large;
+  font-weight: bold;
+}
+.formChat{
+    grid-area: C;
+    display: flex;
+    margin-bottom: 20px;
     align-items: center;
   }
-.welcome-and-logout h1{
-    margin-left: auto;
-    margin-right: auto;
-  }
-.welcome-and-logout button{
-    background-color: white;
-    height: 70%;
-    border: none;
-    border-radius: 20px;
-    color: black;
-    margin-right: 2vh;
-    background-color: transparent;
-    border: 2px solid black;
-  }
-.formChat{
-    height: 8vh;
-    margin-left: 20vh;
-    width: 70%;
-  }
 .formChat input{
-    padding-left: 20px;
-    width: 70%;
-    height: 50%;
+    margin-left: 50px;
+    padding: 5px;
+    width: 85%;
     /* border-color: #9ddce0; */
-    border-color: gray;
-    border-radius: 8px;
+    border: 1px solid #b3b2ae;
+    border-radius: 4px;
   }
 .formChat_button{
+    grid-area: Button;
     margin-left: 5px;
-    height: 50%;
+    width: 6%;
+    padding: 5px;
     font-size: 100%;
-    background: transparent;
     color: black;
-    border: 2px solid black;
-    border-radius: 10px;
+    border: 1px solid #b3b2ae;
+    border-radius: 4px;
+    background-color: #F7AD1D;
   }
-.formChat_button:hover, .welcome-and-logout button:hover{
-    background-color: #9ddce0;
-    color: black;
-    transition: 0.5s;
-  }
+.formChat_button:hover{
+    background-color: #CD901A;
+    transition: 0.4s;
+}
+.logout__button{
+  grid-area: F;
+  width: 50%;
+  height: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F21717;
+  color: white;
+  border: 1px solid #b3b2ae;
+  border-radius: 4px;
+}
+.logout__button:hover{
+  background-color: #BE1414;
+  transition: 0.4s;
+}
 .oneMessage{
     display: flex;
     flex-direction: column;
@@ -99,32 +130,21 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin-right: 5vh;
+    margin-right: 5vw;
     opacity: 0.8;
   }
 .others{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin-left: 5vh;
+    margin-left: 5vw;
     opacity: 0.8;
   }
 .formChat__login{
-    width: 40%;
-    transform: translate(-14%, -5px);
+    grid-area: Login;
     font-weight: bold;
+    margin-left: 10%;
   }
-.messages{
-    overflow: auto; 
-    height: 70vh;
-    width: 100%;
-    margin-right: 1vh;
-    margin-left: 1vh;
-
-
-    background: #cdcbd4;
-    border: 1px solid black;
-}
 .loginText{
     display: flex;
     flex-direction: row;
@@ -141,30 +161,53 @@ body{
     word-break: break-all;
     flex-wrap: wrap;
 }
-.chats{
-  display: flex;
-  flex-direction: row;
+
+.messages{
+  grid-area: B;
+  overflow-y: scroll; 
+  text-align: center;
+  height: 80vh;
+  background: white;
+  margin-left: 2vw;
+  border-top: 1px solid #b3b2ae;
+  border-bottom: 1px solid #b3b2ae;
+  border-right: 1px solid #b3b2ae;
 }
 .chatsList button{
   margin-bottom: 20px;
 }
+
 .chatsList{
-  margin-left: 5vh;
-  height: 70vh;
+  grid-area: A;
+  height: 93vh;
+  border-right: 1px solid #b3b2ae;
+  border-top: 1px solid #b3b2ae;
   overflow-y: scroll;
 }
 .oneChat{
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  padding-left: 1vw;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   background-color: white;
-  border: 1px solid black;
   user-select: none;
 }
 .oneChat:hover{
-  background-color: #cdcbd4;
-  border: 1px solid black;
-  color: black;
-  transition: 0.5s;
+  background-color: #EDEAE8;
+  transition: 0.2s;
+}
+.usersNumber{
+  transform: translate(12vw);
+  font-size: 0.9em;
+}
+
+.chatName{
+  font-size: 1.1em;
+  margin-left: 5px;
 }
 .createChat__form{
   display: flex;
@@ -187,9 +230,22 @@ body{
 }
 .select_item:hover{
   background-color: #e1dfed;
-  border: 1px solid black;
+  border: 1px solid #b3b2ae;
   transition: 0.3;
 }
 .createChat__button{
-  margin-left: 4vh;
+  grid-area: D;
+  width: 60%;
+  height: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #B1F574;
+  border: 1px solid #b3b2ae;
+  border-radius: 4px;
+}
+.createChat__button:hover{
+  background-color: #9DD868;
+  transition: 0.4s;
 }
